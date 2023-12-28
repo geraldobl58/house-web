@@ -19,8 +19,8 @@ export const Navigation = () => {
       pro: false,
     },
     {
-      href: "/buy",
-      label: "Comprar",
+      href: "/category/casas",
+      label: "Casas",
       pro: false,
     },
     {

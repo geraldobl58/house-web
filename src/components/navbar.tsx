@@ -8,7 +8,6 @@ const Navbar = async () => {
   return (
     <div
       className="
-        fixed 
         w-full 
         z-50
         flex 
