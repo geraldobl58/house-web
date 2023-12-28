@@ -1,8 +1,10 @@
+import Navbar from "@/components/navbar";
+
 const HomepageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="h-full">
-        Navbar
+        <Navbar />
         <main className="pt-20 h-full">
           Search
           {children}
