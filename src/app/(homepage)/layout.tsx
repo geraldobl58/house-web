@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { Search } from "./components/search";
 
 const HomepageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -6,7 +7,7 @@ const HomepageLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="h-full">
         <Navbar />
         <main className="pt-20 h-full">
-          Search
+          <Search />
           {children}
         </main>
       </div>
