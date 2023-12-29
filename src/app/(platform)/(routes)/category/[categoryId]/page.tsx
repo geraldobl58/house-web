@@ -1,8 +1,13 @@
 import Navbar from "@/components/navbar";
+import Categories from "@/components/categories";
 
 import SearchInput from "./components/search-input";
 
-const CategoryPage = () => {
+import prismadb from "@/lib/prismadb";
+
+const CategoryPage = async () => {
+  const categories = await prismadb.category.findMany();
+
   return (
     <>
       <Navbar />
@@ -16,7 +21,7 @@ const CategoryPage = () => {
             </div>
           </div>
           <div className="flex-1 bg-zinc-100 h-full p-6 rounded-lg">
-            Content Data
+            <Categories data={categories} />
           </div>
         </div>
       </div>
