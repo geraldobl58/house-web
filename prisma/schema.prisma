@@ -16,6 +16,84 @@ model Category {
   id   String @id @default(uuid())
   name String
 
+  properties Property[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Bathroom {
+  id       String @id @default(uuid())
+  quantity Int
+
+  properties Property[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bedroom {
+  id       String @id @default(uuid())
+  quantity Int
+
+  properties Property[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Garage {
+  id       String @id @default(uuid())
+  quantity Int
+
+  properties Property[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Image {
+  id         String   @id @default(uuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([propertyId])
+}
+
+model Property {
+  id           String @id @default(uuid())
+  userId       String
+  userName     String
+  name         String
+  address      String
+  neighborhood String
+  price        Int
+  description  String
+
+  bathroomId String
+  bathroom   Bathroom @relation(fields: [bathroomId], references: [id])
+
+  bedroomId String
+  bedroom   Bedroom @relation(fields: [bedroomId], references: [id])
+
+  garageId String
+  garage   Garage @relation(fields: [garageId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  images Image[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([bathroomId])
+  @@index([bedroomId])
+  @@index([garageId])
+  @@fulltext([name])
 }
