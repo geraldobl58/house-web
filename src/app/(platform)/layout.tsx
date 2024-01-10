@@ -1,10 +1,7 @@
-import Navbar from "@/components/navbar";
-
 const PlatformLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full">
-      {/* <Navbar /> */}
-      <main className="mx-auto">{children}</main>
+      <main className="mx-auto h-full">{children}</main>
     </div>
   );
 };
