@@ -10,6 +10,8 @@
     "seed": "node ./src/scripts/seed.ts"
   },
   "dependencies": {
+    "@clerk/localizations": "^1.26.13",
+    "@clerk/nextjs": "^4.29.1",
     "@hookform/resolvers": "^3.3.3",
     "@prisma/client": "^5.7.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
