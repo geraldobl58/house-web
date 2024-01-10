@@ -6,11 +6,9 @@ import { useRouter } from "next/navigation";
 
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import axios from "axios";
-
-// import { AlertModal } from "@/components/modals/alert-modal";
 
 import {
   DropdownMenu,
@@ -21,6 +19,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { PropertyColumn } from "./columns";
+import { AlertModal } from "@/components/alert-modal";
+import { useUser } from "@clerk/nextjs";
 
 interface CellActionProps {
   data: PropertyColumn;
@@ -32,28 +32,28 @@ export const CellAction = ({ data }: CellActionProps) => {
 
   const router = useRouter();
 
-  // const onDelete = async () => {
-  //   try {
-  //     setLoading(true);
-  //     await axios.delete(`/api/properties/${data.id}`);
-  //     router.refresh();
-  //     toast.success("Registro excluido com sucesso!");
-  //   } catch (error) {
-  //     toast.error("Houve um erro ao excluir o registro!");
-  //   } finally {
-  //     setLoading(false);
-  //     setOpen(false);
-  //   }
-  // };
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/properties/${data.id}`);
+      router.refresh();
+      toast.success("Registro excluido com sucesso!");
+    } catch (error) {
+      toast.error("Houve um erro ao excluir o registro!");
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
-      {/* <AlertModal
+      <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onDelete}
         loading={loading}
-      /> */}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -65,7 +65,7 @@ export const CellAction = ({ data }: CellActionProps) => {
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              router.push(`/properties/${data.id}`);
+              router.push(`/property/${data.id}`);
             }}
           >
             <Edit className="mr-2 h-4 w-4" />
