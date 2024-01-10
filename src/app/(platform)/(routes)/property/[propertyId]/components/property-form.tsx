@@ -104,6 +104,7 @@ const PropertyForm = ({
           price: parseFloat(String(initialData?.price)),
         }
       : {
+          name: "",
           categoryId: "",
           images: [],
           address: "",
@@ -117,7 +118,6 @@ const PropertyForm = ({
   });
 
   const onSubmit = async (data: PropertiesFormValues) => {
-    console.log(data);
     try {
       setLoading(true);
       if (initialData) {
@@ -127,7 +127,7 @@ const PropertyForm = ({
       }
       router.refresh();
       toast.success(toastMessage);
-      router.push("/properties");
+      router.push("/property");
     } catch (error) {
       toast.error(toastMessage);
     } finally {
@@ -138,7 +138,7 @@ const PropertyForm = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/properties/${params.propertyId}`);
+      await axios.delete(`/api/property/${params.propertyId}`);
       router.refresh();
       router.push("/");
       toast.success("Imóvel excluido com sucesso!");
