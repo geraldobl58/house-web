@@ -54,7 +54,7 @@ export const Navigation = () => {
       pro: false,
     },
     {
-      href: "/anunciar",
+      href: "/property",
       label: "Anunciar",
       pro: true,
       active: true,
