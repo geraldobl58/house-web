@@ -1,11 +1,33 @@
-import Navbar from "@/components/navbar";
 import Categories from "@/components/categories";
+import Properties from "@/components/properties";
 
 import SearchInput from "./components/search-input";
 
 import prismadb from "@/lib/prismadb";
 
-const CategoryPage = async () => {
+interface CategoryPageProps {
+  searchParams: {
+    categoryId: string;
+    name: string;
+  };
+}
+
+const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
+  const data = await prismadb.property.findMany({
+    where: {
+      categoryId: searchParams.categoryId,
+      name: {
+        search: searchParams.name,
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      images: true,
+    },
+  });
+
   const categories = await prismadb.category.findMany();
 
   return (
@@ -18,6 +40,7 @@ const CategoryPage = async () => {
       </div>
       <div className="flex-1 bg-zinc-100 h-full p-6 rounded-lg">
         <Categories data={categories} />
+        <Properties data={data} />
       </div>
     </div>
   );
