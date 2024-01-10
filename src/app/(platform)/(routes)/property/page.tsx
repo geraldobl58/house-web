@@ -1,11 +1,21 @@
-import Navbar from "@/components/navbar";
-
 import prismadb from "@/lib/prismadb";
+
+import { auth, redirectToSignIn } from "@clerk/nextjs";
 
 import { PropertyClient } from "./components/client";
 
 const PropertiesPage = async () => {
+  // Verifica se o usuário é o mesmo que tem permissão para ver seus anúncios.
+  const { userId } = auth();
+
+  if (!userId) {
+    return redirectToSignIn();
+  }
+
   const properties = await prismadb.property.findMany({
+    where: {
+      userId,
+    },
     orderBy: {
       createdAt: "desc",
     },
