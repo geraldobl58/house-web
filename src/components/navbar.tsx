@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Navigation } from "@/components/navigation";
 import { MobileNavigation } from "@/components/mobile-navigation";
+import { UserButton } from "@clerk/nextjs";
 
 const Navbar = async () => {
   return (
@@ -31,7 +32,10 @@ const Navbar = async () => {
       </div>
       <div className="flex items-center gap-x-3">
         <div className="hidden lg:block mt-2">
-          <Navigation />
+          <div className="flex items-center justify-center">
+            <Navigation />
+            <UserButton afterSignOutUrl="/" />
+          </div>
         </div>
       </div>
     </div>
