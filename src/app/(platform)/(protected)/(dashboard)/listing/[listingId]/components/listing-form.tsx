@@ -46,8 +46,9 @@ import {
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertModal } from "@/components/alert-modal";
+import { formShema } from "./schema";
 
-interface PropertiesFormProps {
+interface ListingFormProps {
   initialData:
     | (Property & {
         images: Image[];
@@ -59,28 +60,15 @@ interface PropertiesFormProps {
   garages: Garage[];
 }
 
-export const formShema = z.object({
-  name: z.string().min(10),
-  images: z.object({ url: z.string() }).array().min(1),
-  categoryId: z.string().min(1),
-  address: z.string().min(5),
-  neighborhood: z.string().min(10),
-  price: z.coerce.number(),
-  description: z.string().min(10),
-  bathroomId: z.string().min(1),
-  bedroomId: z.string().min(1),
-  garageId: z.string().min(1),
-});
+type ListingFormValues = z.infer<typeof formShema>;
 
-type PropertiesFormValues = z.infer<typeof formShema>;
-
-const PropertyForm = ({
+const ListingForm = ({
   initialData,
   categories,
   bathrooms,
   bedrooms,
   garages,
-}: PropertiesFormProps) => {
+}: ListingFormProps) => {
   const params = useParams();
   const router = useRouter();
 
@@ -96,7 +84,7 @@ const PropertyForm = ({
     : "Imóvel cadastrado com sucesso!";
   const action = initialData ? "Editar registro" : "Salvar registro";
 
-  const form = useForm<PropertiesFormValues>({
+  const form = useForm<ListingFormValues>({
     resolver: zodResolver(formShema),
     defaultValues: initialData
       ? {
@@ -117,17 +105,17 @@ const PropertyForm = ({
         },
   });
 
-  const onSubmit = async (data: PropertiesFormValues) => {
+  const onSubmit = async (data: ListingFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/properties/${params.propertyId}`, data);
+        await axios.patch(`/api/listing/${params.listingId}`, data);
       } else {
-        await axios.post(`/api/properties`, data);
+        await axios.post(`/api/listing`, data);
       }
       router.refresh();
       toast.success(toastMessage);
-      router.push("/property");
+      router.push("/listing");
     } catch (error) {
       toast.error(toastMessage);
     } finally {
@@ -138,7 +126,7 @@ const PropertyForm = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/property/${params.propertyId}`);
+      await axios.delete(`/api/listing/${params.listingId}`);
       router.refresh();
       router.push("/");
       toast.success("Imóvel excluido com sucesso!");
@@ -435,4 +423,4 @@ const PropertyForm = ({
   );
 };
 
-export default PropertyForm;
+export default ListingForm;

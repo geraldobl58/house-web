@@ -58,7 +58,7 @@ export async function POST(req: Request) {
 
     // TODO: Check for subscription
 
-    const property = await prismadb.property.create({
+    const listing = await prismadb.property.create({
       data: {
         userId: user.id,
         userName: user.firstName,
@@ -78,41 +78,9 @@ export async function POST(req: Request) {
         garageId,
       },
     });
-    return NextResponse.json(property);
+    return NextResponse.json(listing);
   } catch (error) {
     console.log("[PROPERTY_POST]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
-}
-
-export async function GET(req: Request) {
-  // try {
-  //   const { searchParams } = new URL(req.url);
-  //   const categoryId = searchParams.get("categoryId") || undefined;
-  //   const bathroomId = searchParams.get("bathroomId") || undefined;
-  //   const bedroomId = searchParams.get("bedroomId") || undefined;
-  //   const garageId = searchParams.get("garageId") || undefined;
-  //   const properties = await prismadb.property.findMany({
-  //     where: {
-  //       categoryId,
-  //       bathroomId,
-  //       bedroomId,
-  //       garageId,
-  //     },
-  //     include: {
-  //       images: true,
-  //       category: true,
-  //       bathroom: true,
-  //       bedroom: true,
-  //       garage: true,
-  //     },
-  //     orderBy: {
-  //       createdAt: "desc",
-  //     },
-  //   });
-  //   return NextResponse.json(properties);
-  // } catch (error) {
-  //   console.log("[PROPERTIES_GET]", error);
-  //   return new NextResponse("Internal Server Error", { status: 500 });
-  // }
 }

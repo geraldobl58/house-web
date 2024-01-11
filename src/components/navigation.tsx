@@ -2,11 +2,17 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
+import { useAuth } from "@clerk/nextjs";
+
 import { cn } from "@/lib/utils";
 
 export const Navigation = () => {
   const pathname = usePathname();
   const router = useRouter();
+
+  const { userId } = useAuth();
+
+  const user = userId ? "Dashboard" : "Anunciar";
 
   const onNavigate = (url: string) => {
     return router.push(url);
@@ -54,8 +60,8 @@ export const Navigation = () => {
       pro: false,
     },
     {
-      href: "/property",
-      label: "Anunciar",
+      href: "/listing",
+      label: `${user}`,
       pro: true,
       active: true,
     },

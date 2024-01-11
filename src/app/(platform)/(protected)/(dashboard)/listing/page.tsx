@@ -2,9 +2,9 @@ import prismadb from "@/lib/prismadb";
 
 import { auth, redirectToSignIn } from "@clerk/nextjs";
 
-import { PropertyClient } from "./components/client";
+import { ListingClient } from "./components/client";
 
-const PropertiesPage = async () => {
+const DashboardPage = async () => {
   // Verifica se o usuário é o mesmo que tem permissão para ver seus anúncios.
   const { userId } = auth();
 
@@ -12,7 +12,7 @@ const PropertiesPage = async () => {
     return redirectToSignIn();
   }
 
-  const properties = await prismadb.property.findMany({
+  const listings = await prismadb.property.findMany({
     where: {
       userId,
     },
@@ -27,16 +27,16 @@ const PropertiesPage = async () => {
     },
   });
 
-  const formattedProperties = properties.map((item) => ({
+  const formattedProperties = listings.map((item) => ({
     id: item.id,
     name: item.name,
   }));
 
   return (
     <div className="flex-col">
-      <PropertyClient data={formattedProperties} />
+      <ListingClient data={formattedProperties} />
     </div>
   );
 };
 
-export default PropertiesPage;
+export default DashboardPage;

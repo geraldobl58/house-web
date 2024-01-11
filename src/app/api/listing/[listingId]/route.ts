@@ -6,7 +6,7 @@ import prismadb from "@/lib/prismadb";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { propertyId: string } }
+  { params }: { params: { listingId: string } }
 ) {
   try {
     const body = await req.json();
@@ -59,15 +59,15 @@ export async function PATCH(
       return new NextResponse("GarageId is required", { status: 400 });
     }
 
-    if (!params.propertyId) {
+    if (!params.listingId) {
       return new NextResponse("Property ID is required", { status: 400 });
     }
 
     // TODO: Check for subscription
 
-    const property = await prismadb.property.update({
+    const listing = await prismadb.property.update({
       where: {
-        id: params.propertyId,
+        id: params.listingId,
       },
       data: {
         userId: user.id,
@@ -88,7 +88,7 @@ export async function PATCH(
         garageId,
       },
     });
-    return NextResponse.json(property);
+    return NextResponse.json(listing);
   } catch (error) {
     console.log("[PROPERTY_PATCH]", error);
     return new NextResponse("Internal Server Error", { status: 500 });

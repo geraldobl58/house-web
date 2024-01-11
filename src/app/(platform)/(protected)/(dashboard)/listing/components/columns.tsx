@@ -4,12 +4,12 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { CellAction } from "./cell-action";
 
-export type PropertyColumn = {
+export type ListingColumn = {
   id: string;
   name: string;
 };
 
-export const columns: ColumnDef<PropertyColumn>[] = [
+export const columns: ColumnDef<ListingColumn>[] = [
   {
     accessorKey: "name",
     header: "Nome",

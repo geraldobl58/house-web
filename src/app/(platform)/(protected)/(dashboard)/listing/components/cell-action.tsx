@@ -18,12 +18,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { PropertyColumn } from "./columns";
 import { AlertModal } from "@/components/alert-modal";
-import { useUser } from "@clerk/nextjs";
+
+import { ListingColumn } from "./columns";
 
 interface CellActionProps {
-  data: PropertyColumn;
+  data: ListingColumn;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
@@ -35,7 +35,7 @@ export const CellAction = ({ data }: CellActionProps) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/properties/${data.id}`);
+      await axios.delete(`/api/listing/${data.id}`);
       router.refresh();
       toast.success("Registro excluido com sucesso!");
     } catch (error) {
@@ -65,7 +65,7 @@ export const CellAction = ({ data }: CellActionProps) => {
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              router.push(`/property/${data.id}`);
+              router.push(`/listing/${data.id}`);
             }}
           >
             <Edit className="mr-2 h-4 w-4" />
