@@ -1,7 +1,7 @@
 import Categories from "@/components/categories";
-import Properties from "@/components/properties";
 
 import SearchInput from "./components/search-input";
+import Properties from "../../properties/[propertiesId]/components/properties";
 
 import prismadb from "@/lib/prismadb";
 
@@ -25,10 +25,30 @@ const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
     },
     include: {
       images: true,
+      bathroom: true,
+      bedroom: true,
+      category: true,
+      garage: true,
     },
   });
 
   const categories = await prismadb.category.findMany();
+
+  const formattedProperties = data.map((item) => ({
+    id: item.id,
+    userId: item.userId,
+    userName: item.userName,
+    name: item.name,
+    address: item.address,
+    neighborhood: item.neighborhood,
+    price: item.price,
+    description: item.description,
+    bathroom: item.bathroom.quantity,
+    bedroom: item.bedroom.quantity,
+    garage: item.garage.quantity,
+    category: item.category,
+    images: item.images.map((image) => image.url),
+  }));
 
   return (
     <div className="flex gap-4">
@@ -40,7 +60,7 @@ const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
       </div>
       <div className="flex-1 bg-zinc-100 h-full p-6 rounded-lg">
         <Categories data={categories} />
-        <Properties data={data} />
+        <Properties data={formattedProperties} />
       </div>
     </div>
   );
