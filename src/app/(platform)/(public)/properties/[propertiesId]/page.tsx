@@ -3,16 +3,18 @@ import { PropertiesClient } from "./components/client";
 
 interface PropertiesPageProps {
   params: {
-    propertyId: string;
+    propertiesId: string;
   };
 }
 
-const PropertiesPage = async ({ params }: PropertiesPageProps) => {
-  // const properties = await prismadb.property.findUnique({
-  //   where: {
-  //     id: params.propertyId,
-  //   },
-  // });
+const PropertiesIdPage = async ({ params }: PropertiesPageProps) => {
+  const properties = await prismadb.property.findUnique({
+    where: {
+      id: params.propertiesId,
+    },
+  });
+
+  console.log(properties);
 
   return (
     <>
@@ -22,4 +24,4 @@ const PropertiesPage = async ({ params }: PropertiesPageProps) => {
   );
 };
 
-export default PropertiesPage;
+export default PropertiesIdPage;
