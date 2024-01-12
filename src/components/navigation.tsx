@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { useAuth } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
 
 export const Navigation = () => {
   const pathname = usePathname();
@@ -25,17 +27,12 @@ export const Navigation = () => {
       pro: false,
     },
     {
-      href: "/category/casas",
-      label: "Casas",
+      href: "/category/buy-house",
+      label: "Comprar",
       pro: false,
     },
     {
-      href: "/sale",
-      label: "Vender",
-      pro: false,
-    },
-    {
-      href: "/rent",
+      href: "/category/rent-house",
       label: "Alugar",
       pro: false,
     },
@@ -110,6 +107,22 @@ export const Navigation = () => {
               </div>
             </div>
           ))}
+          {!userId && (
+            <Link href="/sign-in">
+              <Button
+                className="
+              bg-slate-800
+              text-white 
+                border-0
+              hover:text-white
+                p-6
+                mb-2
+              "
+              >
+                Entrar
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
