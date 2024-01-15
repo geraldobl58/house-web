@@ -1,7 +1,7 @@
 import Categories from "@/components/categories";
 
 import SearchInput from "./components/search-input";
-import Properties from "../../properties/[propertiesId]/components/properties";
+import Properties from "./components/properties";
 
 import prismadb from "@/lib/prismadb";
 
