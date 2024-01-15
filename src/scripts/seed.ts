@@ -66,6 +66,16 @@ async function main() {
   } finally {
     await db.$disconnect();
   }
+
+  try {
+    await db.business.createMany({
+      data: [{ name: "Comprar" }, { name: "Alugar" }],
+    });
+  } catch (error) {
+    console.error("Error seeding default type of business", error);
+  } finally {
+    await db.$disconnect();
+  }
 }
 
 main();

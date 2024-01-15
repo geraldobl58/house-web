@@ -1,18 +1,19 @@
 import prismadb from "@/lib/prismadb";
-import PropertyForm from "./components/property-form";
 
-interface PropertyIdPageProps {
+import ListingForm from "./components/listing-form";
+
+interface ListingIdPageProps {
   params: {
-    propertyId: string;
+    listingId: string;
   };
 }
 
-const PropertyIdPage = async ({ params }: PropertyIdPageProps) => {
+const PropertyIdPage = async ({ params }: ListingIdPageProps) => {
   // TODO: Check subscription
 
   const properties = await prismadb.property.findUnique({
     where: {
-      id: params.propertyId,
+      id: params.listingId,
     },
     include: {
       images: true,
@@ -43,10 +44,17 @@ const PropertyIdPage = async ({ params }: PropertyIdPageProps) => {
     },
   });
 
+  const business = await prismadb.business.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
   return (
-    <PropertyForm
+    <ListingForm
       initialData={properties}
       categories={categories}
+      business={business}
       bathrooms={bathrooms}
       bedrooms={bedrooms}
       garages={garages}

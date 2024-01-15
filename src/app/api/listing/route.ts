@@ -4,10 +4,7 @@ import { currentUser } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
-export async function PATCH(
-  req: Request,
-  { params }: { params: { propertyId: string } }
-) {
+export async function POST(req: Request) {
   try {
     const body = await req.json();
     const user = await currentUser();
@@ -19,9 +16,12 @@ export async function PATCH(
       neighborhood,
       price,
       description,
+      grill,
+      pool,
       bathroomId,
       bedroomId,
       garageId,
+      businessId,
     } = body;
 
     if (!user || !user.id || !user.firstName) {
@@ -58,17 +58,13 @@ export async function PATCH(
     if (!garageId) {
       return new NextResponse("GarageId is required", { status: 400 });
     }
-
-    if (!params.propertyId) {
-      return new NextResponse("Property ID is required", { status: 400 });
+    if (!businessId) {
+      return new NextResponse("BusinessId is required", { status: 400 });
     }
 
     // TODO: Check for subscription
 
-    const property = await prismadb.property.update({
-      where: {
-        id: params.propertyId,
-      },
+    const listing = await prismadb.property.create({
       data: {
         userId: user.id,
         userName: user.firstName,
@@ -83,14 +79,17 @@ export async function PATCH(
         neighborhood,
         price,
         description,
+        grill,
+        pool,
         bathroomId,
         bedroomId,
         garageId,
+        businessId,
       },
     });
-    return NextResponse.json(property);
+    return NextResponse.json(listing);
   } catch (error) {
-    console.log("[PROPERTY_PATCH]", error);
+    console.log("[PROPERTY_POST]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

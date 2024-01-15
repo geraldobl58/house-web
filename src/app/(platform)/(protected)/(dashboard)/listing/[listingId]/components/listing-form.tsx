@@ -6,9 +6,11 @@ import { useParams, useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 
-import * as z from "zod";
+import InputMask from "react-input-mask";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import * as z from "zod";
 
 import axios from "axios";
 
@@ -19,6 +21,7 @@ import { Trash } from "lucide-react";
 import {
   Bathroom,
   Bedroom,
+  Business,
   Category,
   Garage,
   Image,
@@ -46,41 +49,33 @@ import {
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertModal } from "@/components/alert-modal";
+import { formShema } from "./schema";
+import { Checkbox } from "@/components/ui/checkbox";
+import ReactInputMask from "react-input-mask";
 
-interface PropertiesFormProps {
+interface ListingFormProps {
   initialData:
     | (Property & {
         images: Image[];
       })
     | null;
   categories: Category[];
+  business: Business[];
   bathrooms: Bathroom[];
   bedrooms: Bedroom[];
   garages: Garage[];
 }
 
-export const formShema = z.object({
-  name: z.string().min(10),
-  images: z.object({ url: z.string() }).array().min(1),
-  categoryId: z.string().min(1),
-  address: z.string().min(5),
-  neighborhood: z.string().min(10),
-  price: z.coerce.number(),
-  description: z.string().min(10),
-  bathroomId: z.string().min(1),
-  bedroomId: z.string().min(1),
-  garageId: z.string().min(1),
-});
+type ListingFormValues = z.infer<typeof formShema>;
 
-type PropertiesFormValues = z.infer<typeof formShema>;
-
-const PropertyForm = ({
+const ListingForm = ({
   initialData,
   categories,
+  business,
   bathrooms,
   bedrooms,
   garages,
-}: PropertiesFormProps) => {
+}: ListingFormProps) => {
   const params = useParams();
   const router = useRouter();
 
@@ -96,16 +91,17 @@ const PropertyForm = ({
     : "Imóvel cadastrado com sucesso!";
   const action = initialData ? "Editar registro" : "Salvar registro";
 
-  const form = useForm<PropertiesFormValues>({
+  const form = useForm<ListingFormValues>({
     resolver: zodResolver(formShema),
     defaultValues: initialData
       ? {
           ...initialData,
-          price: parseFloat(String(initialData?.price)),
+          price: parseInt(String(initialData?.price)),
         }
       : {
           name: "",
           categoryId: "",
+          businessId: "",
           images: [],
           address: "",
           neighborhood: "",
@@ -114,20 +110,22 @@ const PropertyForm = ({
           bathroomId: "",
           bedroomId: "",
           garageId: "",
+          grill: false,
+          pool: false,
         },
   });
 
-  const onSubmit = async (data: PropertiesFormValues) => {
+  const onSubmit = async (data: ListingFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/properties/${params.propertyId}`, data);
+        await axios.patch(`/api/listing/${params.listingId}`, data);
       } else {
-        await axios.post(`/api/properties`, data);
+        await axios.post(`/api/listing`, data);
       }
       router.refresh();
       toast.success(toastMessage);
-      router.push("/property");
+      router.push("/listing");
     } catch (error) {
       toast.error(toastMessage);
     } finally {
@@ -138,9 +136,9 @@ const PropertyForm = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/property/${params.propertyId}`);
+      await axios.delete(`/api/listing/${params.listingId}`);
       router.refresh();
-      router.push("/");
+      router.push("/listing");
       toast.success("Imóvel excluido com sucesso!");
     } catch (error) {
       toast.error("Houve um erro ao excluir o imóvel.");
@@ -264,6 +262,38 @@ const PropertyForm = ({
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
+              name="businessId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Selecionar"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {business.map((item) => (
+                        <SelectItem key={item.id} value={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
@@ -301,6 +331,13 @@ const PropertyForm = ({
                 <FormItem>
                   <FormLabel>Preço</FormLabel>
                   <FormControl>
+                    {/* <InputMask
+                      mask="999.999"
+                      maskChar=""
+                      {...field}
+                      placeholder="R$"
+                      className="w-full"
+                    /> */}
                     <Input disabled={loading} {...field} className="w-full" />
                   </FormControl>
                   <FormMessage />
@@ -426,6 +463,42 @@ const PropertyForm = ({
               )}
             />
           </div>
+          <div className="grid grid-cols-8 gap-8">
+            <FormField
+              control={form.control}
+              name="grill"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Churrasqueira</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="pool"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Piscina</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+          </div>
           <Button type="submit" disabled={loading} className="ml-auto">
             {action}
           </Button>
@@ -435,4 +508,4 @@ const PropertyForm = ({
   );
 };
 
-export default PropertyForm;
+export default ListingForm;

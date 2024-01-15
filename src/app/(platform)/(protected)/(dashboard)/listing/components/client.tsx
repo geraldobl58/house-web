@@ -9,13 +9,13 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 
-import { PropertyColumn, columns } from "./columns";
+import { ListingColumn, columns } from "./columns";
 
-interface PropertyClientProps {
-  data: PropertyColumn[];
+interface ListingClientProps {
+  data: ListingColumn[];
 }
 
-export const PropertyClient = ({ data }: PropertyClientProps) => {
+export const ListingClient = ({ data }: ListingClientProps) => {
   const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ export const PropertyClient = ({ data }: PropertyClientProps) => {
           title={`Imóveis(${data.length})`}
           description="Gerenciamento de imóveis"
         />
-        <Button onClick={() => router.push(`/property/advertise`)}>
+        <Button onClick={() => router.push(`/listing/new`)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Registro
         </Button>

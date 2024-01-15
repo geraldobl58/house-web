@@ -52,6 +52,16 @@ model Garage {
   updatedAt DateTime @updatedAt
 }
 
+model Business {
+  id   String @id @default(uuid())
+  name String
+
+  properties Property[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Image {
   id         String   @id @default(uuid())
   propertyId String
@@ -74,6 +84,9 @@ model Property {
   price        Int
   description  String
 
+  grill Boolean @default(false)
+  pool  Boolean @default(false)
+
   bathroomId String
   bathroom   Bathroom @relation(fields: [bathroomId], references: [id])
 
@@ -86,12 +99,16 @@ model Property {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+
   images Image[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([businessId])
   @@index([bathroomId])
   @@index([bedroomId])
   @@index([garageId])

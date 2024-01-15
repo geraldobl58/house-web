@@ -40,9 +40,9 @@ const ImageUpload = ({
   return (
     <div>
       <div className="mb-4 flex items-center gap-4">
-        {value.map((url) => (
+        {value.map((url, index) => (
           <div
-            key={url}
+            key={`${url}-${index}`}
             className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
           >
             <div className="absolute z-10 top-2 right-2">
