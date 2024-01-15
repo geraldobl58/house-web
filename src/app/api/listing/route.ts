@@ -16,9 +16,12 @@ export async function POST(req: Request) {
       neighborhood,
       price,
       description,
+      grill,
+      pool,
       bathroomId,
       bedroomId,
       garageId,
+      businessId,
     } = body;
 
     if (!user || !user.id || !user.firstName) {
@@ -55,6 +58,9 @@ export async function POST(req: Request) {
     if (!garageId) {
       return new NextResponse("GarageId is required", { status: 400 });
     }
+    if (!businessId) {
+      return new NextResponse("BusinessId is required", { status: 400 });
+    }
 
     // TODO: Check for subscription
 
@@ -73,9 +79,12 @@ export async function POST(req: Request) {
         neighborhood,
         price,
         description,
+        grill,
+        pool,
         bathroomId,
         bedroomId,
         garageId,
+        businessId,
       },
     });
     return NextResponse.json(listing);

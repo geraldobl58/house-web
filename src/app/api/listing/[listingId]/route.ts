@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
@@ -19,9 +19,12 @@ export async function PATCH(
       neighborhood,
       price,
       description,
+      grill,
+      pool,
       bathroomId,
       bedroomId,
       garageId,
+      businessId,
     } = body;
 
     if (!user || !user.id || !user.firstName) {
@@ -58,7 +61,9 @@ export async function PATCH(
     if (!garageId) {
       return new NextResponse("GarageId is required", { status: 400 });
     }
-
+    if (!businessId) {
+      return new NextResponse("Property ID is required", { status: 400 });
+    }
     if (!params.listingId) {
       return new NextResponse("Property ID is required", { status: 400 });
     }
@@ -83,14 +88,42 @@ export async function PATCH(
         neighborhood,
         price,
         description,
+        grill,
+        pool,
         bathroomId,
         bedroomId,
         garageId,
+        businessId,
       },
     });
     return NextResponse.json(listing);
   } catch (error) {
     console.log("[PROPERTY_PATCH]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { listingId: string } }
+) {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const listing = await prismadb.property.delete({
+      where: {
+        userId,
+        id: params.listingId,
+      },
+    });
+
+    return NextResponse.json(listing);
+  } catch (error) {
+    console.log("[PROPERTY_DELETE]", error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }

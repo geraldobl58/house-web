@@ -44,10 +44,17 @@ const PropertyIdPage = async ({ params }: ListingIdPageProps) => {
     },
   });
 
+  const business = await prismadb.business.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+
   return (
     <ListingForm
       initialData={properties}
       categories={categories}
+      business={business}
       bathrooms={bathrooms}
       bedrooms={bedrooms}
       garages={garages}
