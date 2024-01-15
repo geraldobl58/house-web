@@ -33,7 +33,7 @@ export const PropertiesCard = ({
     <div className="ml-10 p-4 w-[450px] space-y-4">
       <h3 className="font-medium text-2xl text-primary">
         <Link
-          href={`/properties/${id}`}
+          href={`/property/${id}`}
           target="_blank"
           className="hover:underline"
         >
@@ -68,7 +68,7 @@ export const PropertiesCard = ({
       <p className="text-lg text-primary">{formatPrice(price)}</p>
 
       <div>
-        <Link href={`/properties/${id}`} target="_blank">
+        <Link href={`/property/${id}`} target="_blank">
           <Button>Saiba mais</Button>
         </Link>
       </div>
