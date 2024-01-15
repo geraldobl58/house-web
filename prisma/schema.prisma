@@ -84,9 +84,6 @@ model Property {
   price        Int
   description  String
 
-  grill Boolean @default(false)
-  pool  Boolean @default(false)
-
   bathroomId String
   bathroom   Bathroom @relation(fields: [bathroomId], references: [id])
 
@@ -108,9 +105,9 @@ model Property {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-  @@index([businessId])
   @@index([bathroomId])
   @@index([bedroomId])
+  @@index([businessId])
   @@index([garageId])
   @@fulltext([name])
 }
