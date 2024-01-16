@@ -14,4 +14,6 @@ export const formShema = z.object({
   bathroomId: z.string().min(1),
   bedroomId: z.string().min(1),
   garageId: z.string().min(1),
+  grill: z.boolean().default(false).optional(),
+  pool: z.boolean().default(false).optional(),
 });

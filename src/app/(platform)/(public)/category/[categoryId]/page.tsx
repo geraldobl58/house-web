@@ -101,13 +101,13 @@ const CategoryPage = async ({ searchParams, params }: CategoryPageProps) => {
           <Filters valueKey="businessId" name="Tipo" business={business} />
         </div>
         <div>
-          <Filters valueKey="bedroomId" name="Quartos" bathroom={bedroom} />
+          <Filters valueKey="bedroomId" name="Quartos" bedroom={bedroom} />
         </div>
         <div>
           <Filters valueKey="bathroomId" name="Banheiros" bathroom={bathroom} />
         </div>
         <div>
-          <Filters valueKey="garageId" name="Garagem" bathroom={garage} />
+          <Filters valueKey="garageId" name="Garagem" garage={garage} />
         </div>
         <div>
           <Link href={`/category/${params.categoryId}`} passHref>

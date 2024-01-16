@@ -19,6 +19,8 @@ export async function POST(req: Request) {
       bathroomId,
       bedroomId,
       garageId,
+      grill,
+      pool,
       businessId,
     } = body;
 
@@ -80,6 +82,8 @@ export async function POST(req: Request) {
         bathroomId,
         bedroomId,
         garageId,
+        grill,
+        pool,
         businessId,
       },
     });

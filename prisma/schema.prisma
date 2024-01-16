@@ -84,6 +84,9 @@ model Property {
   price        Int
   description  String
 
+  grill Boolean @default(false)
+  pool  Boolean @default(false)
+
   bathroomId String
   bathroom   Bathroom @relation(fields: [bathroomId], references: [id])
 

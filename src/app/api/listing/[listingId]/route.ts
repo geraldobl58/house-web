@@ -22,6 +22,8 @@ export async function PATCH(
       bathroomId,
       bedroomId,
       garageId,
+      grill,
+      pool,
       businessId,
     } = body;
 
@@ -89,6 +91,8 @@ export async function PATCH(
         bathroomId,
         bedroomId,
         garageId,
+        grill,
+        pool,
         businessId,
       },
     });
