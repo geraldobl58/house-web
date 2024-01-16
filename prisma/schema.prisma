@@ -108,9 +108,9 @@ model Property {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-  @@index([businessId])
   @@index([bathroomId])
   @@index([bedroomId])
+  @@index([businessId])
   @@index([garageId])
   @@fulltext([name])
 }

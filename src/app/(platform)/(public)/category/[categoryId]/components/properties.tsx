@@ -4,12 +4,12 @@ import Image from "next/image";
 
 import { Card } from "@/components/ui/card";
 
-import { PropertiesProps } from "@/types/property";
+import { Property } from "@/types/property";
 
 import { PropertiesCard } from "./properties-card";
 import { PropertiesCarousel } from "./properties-carousel";
 
-export const Properties = ({ data }: PropertiesProps) => {
+export const Properties = ({ data }: Property) => {
   if (data.length === 0) {
     return (
       <div className="pt-10 flex flex-col items-center justify-center">

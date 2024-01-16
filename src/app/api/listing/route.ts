@@ -16,11 +16,11 @@ export async function POST(req: Request) {
       neighborhood,
       price,
       description,
-      grill,
-      pool,
       bathroomId,
       bedroomId,
       garageId,
+      grill,
+      pool,
       businessId,
     } = body;
 
@@ -79,11 +79,11 @@ export async function POST(req: Request) {
         neighborhood,
         price,
         description,
-        grill,
-        pool,
         bathroomId,
         bedroomId,
         garageId,
+        grill,
+        pool,
         businessId,
       },
     });

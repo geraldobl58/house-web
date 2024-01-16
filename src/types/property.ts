@@ -1,4 +1,4 @@
-export interface PropertiesProps {
+export interface Property {
   data: {
     id: string;
     userId: string;

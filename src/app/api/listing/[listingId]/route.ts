@@ -19,11 +19,11 @@ export async function PATCH(
       neighborhood,
       price,
       description,
-      grill,
-      pool,
       bathroomId,
       bedroomId,
       garageId,
+      grill,
+      pool,
       businessId,
     } = body;
 
@@ -88,11 +88,11 @@ export async function PATCH(
         neighborhood,
         price,
         description,
-        grill,
-        pool,
         bathroomId,
         bedroomId,
         garageId,
+        grill,
+        pool,
         businessId,
       },
     });
