@@ -20,56 +20,8 @@ async function main() {
   }
 
   try {
-    await db.bathroom.createMany({
-      data: [
-        { quantity: 1 },
-        { quantity: 2 },
-        { quantity: 3 },
-        { quantity: 4 },
-        { quantity: 5 },
-      ],
-    });
-  } catch (error) {
-    console.error("Error seeding default type of bathroom", error);
-  } finally {
-    await db.$disconnect();
-  }
-
-  try {
-    await db.bedroom.createMany({
-      data: [
-        { quantity: 1 },
-        { quantity: 2 },
-        { quantity: 3 },
-        { quantity: 4 },
-        { quantity: 5 },
-      ],
-    });
-  } catch (error) {
-    console.error("Error seeding default type of bedroom", error);
-  } finally {
-    await db.$disconnect();
-  }
-
-  try {
-    await db.garage.createMany({
-      data: [
-        { quantity: 1 },
-        { quantity: 2 },
-        { quantity: 3 },
-        { quantity: 4 },
-        { quantity: 5 },
-      ],
-    });
-  } catch (error) {
-    console.error("Error seeding default type of garage", error);
-  } finally {
-    await db.$disconnect();
-  }
-
-  try {
     await db.business.createMany({
-      data: [{ name: "Comprar" }, { name: "Alugar" }],
+      data: [{ name: "Alugar" }, { name: "Vender" }],
     });
   } catch (error) {
     console.error("Error seeding default type of business", error);

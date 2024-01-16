@@ -26,38 +26,18 @@ const PropertyIdPage = async ({ params }: ListingIdPageProps) => {
     },
   });
 
-  const bathrooms = await prismadb.bathroom.findMany({
-    orderBy: {
-      quantity: "asc",
-    },
-  });
-
-  const bedrooms = await prismadb.bedroom.findMany({
-    orderBy: {
-      quantity: "asc",
-    },
-  });
-
-  const garages = await prismadb.garage.findMany({
-    orderBy: {
-      quantity: "asc",
-    },
-  });
-
   const business = await prismadb.business.findMany({
     orderBy: {
       name: "asc",
     },
   });
+  business;
 
   return (
     <ListingForm
       initialData={properties}
       categories={categories}
       business={business}
-      bathrooms={bathrooms}
-      bedrooms={bedrooms}
-      garages={garages}
     />
   );
 };

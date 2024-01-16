@@ -18,15 +18,8 @@ import toast from "react-hot-toast";
 
 import { Trash } from "lucide-react";
 
-import {
-  Bathroom,
-  Bedroom,
-  Business,
-  Category,
-  Garage,
-  Image,
-  Property,
-} from "@prisma/client";
+import { Category, Image, Property } from "@prisma/client";
+
 import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -49,9 +42,12 @@ import {
 import ImageUpload from "@/components/ui/image-upload";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertModal } from "@/components/alert-modal";
-import { formShema } from "./schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import ReactInputMask from "react-input-mask";
+
+import { Business } from "@/types/business";
+
+import { formShema } from "./schema";
 
 interface ListingFormProps {
   initialData:
@@ -61,9 +57,6 @@ interface ListingFormProps {
     | null;
   categories: Category[];
   business: Business[];
-  bathrooms: Bathroom[];
-  bedrooms: Bedroom[];
-  garages: Garage[];
 }
 
 type ListingFormValues = z.infer<typeof formShema>;
@@ -72,9 +65,6 @@ const ListingForm = ({
   initialData,
   categories,
   business,
-  bathrooms,
-  bedrooms,
-  garages,
 }: ListingFormProps) => {
   const params = useParams();
   const router = useRouter();
@@ -107,9 +97,9 @@ const ListingForm = ({
           neighborhood: "",
           price: 0,
           description: "",
-          bathroomId: "",
-          bedroomId: "",
-          garageId: "",
+          bathrooms: 1,
+          bedrooms: 1,
+          garage: 1,
           grill: false,
           pool: false,
         },
@@ -126,6 +116,7 @@ const ListingForm = ({
       router.refresh();
       toast.success(toastMessage);
       router.push("/listing");
+      window.location.reload();
     } catch (error) {
       toast.error(toastMessage);
     } finally {
@@ -348,96 +339,63 @@ const ListingForm = ({
           <div className="grid grid-cols-4 gap-8">
             <FormField
               control={form.control}
-              name="bathroomId"
+              name="bathrooms"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Banheiros</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Selecionar"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {bathrooms.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.quantity}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={1}
+                      max={5}
+                      disabled={loading}
+                      placeholder="Banheiros"
+                      {...field}
+                      className="w-full"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="bedroomId"
+              name="bedrooms"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Quartos</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Selecionar"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {bedrooms.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.quantity}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={1}
+                      max={5}
+                      disabled={loading}
+                      placeholder="Quartos"
+                      {...field}
+                      className="w-full"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="garageId"
+              name="garage"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Garagem</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Selecionar"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {garages.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.quantity}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={1}
+                      max={5}
+                      disabled={loading}
+                      placeholder="Garagem"
+                      {...field}
+                      className="w-full"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

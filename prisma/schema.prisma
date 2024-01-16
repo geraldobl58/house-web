@@ -22,37 +22,7 @@ model Category {
   updatedAt DateTime @updatedAt
 }
 
-model Bathroom {
-  id       String @id @default(uuid())
-  quantity Int
-
-  properties Property[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Bedroom {
-  id       String @id @default(uuid())
-  quantity Int
-
-  properties Property[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Garage {
-  id       String @id @default(uuid())
-  quantity Int
-
-  properties Property[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Business {
+model business {
   id   String @id @default(uuid())
   name String
 
@@ -81,26 +51,21 @@ model Property {
   name         String
   address      String
   neighborhood String
-  price        Int
   description  String
+
+  price     Int
+  bedrooms  Int
+  bathrooms Int
+  garage    Int
 
   grill Boolean @default(false)
   pool  Boolean @default(false)
-
-  bathroomId String
-  bathroom   Bathroom @relation(fields: [bathroomId], references: [id])
-
-  bedroomId String
-  bedroom   Bedroom @relation(fields: [bedroomId], references: [id])
-
-  garageId String
-  garage   Garage @relation(fields: [garageId], references: [id])
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
   businessId String
-  business   Business @relation(fields: [businessId], references: [id])
+  business   business @relation(fields: [businessId], references: [id])
 
   images Image[]
 
@@ -108,9 +73,6 @@ model Property {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-  @@index([bathroomId])
-  @@index([bedroomId])
   @@index([businessId])
-  @@index([garageId])
   @@fulltext([name])
 }

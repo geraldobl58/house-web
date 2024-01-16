@@ -22,10 +22,8 @@ const DashboardPage = async () => {
       createdAt: "desc",
     },
     include: {
-      bathroom: true,
       category: true,
-      bedroom: true,
-      garage: true,
+      business: true,
     },
   });
 
@@ -35,9 +33,9 @@ const DashboardPage = async () => {
     address: item.address,
     price: formatPrice(item.price),
     neighborhood: item.neighborhood,
-    bathroom: item.bathroom.quantity,
-    bedroom: item.bedroom.quantity,
-    garage: item.garage.quantity,
+    bathroom: item.bathrooms,
+    bedroom: item.bedrooms,
+    garage: item.garage,
     category: item.category.name,
     userName: item.userName,
   }));

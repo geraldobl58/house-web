@@ -8,8 +8,8 @@ export interface Property {
     neighborhood: string;
     price: number;
     description: string;
-    bathroom: number;
-    bedroom: number;
+    bathrooms: number;
+    bedrooms: number;
     garage: number;
     category: any;
     images: any[];
