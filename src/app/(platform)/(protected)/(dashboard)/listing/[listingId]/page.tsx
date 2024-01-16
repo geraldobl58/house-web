@@ -31,7 +31,6 @@ const PropertyIdPage = async ({ params }: ListingIdPageProps) => {
       name: "asc",
     },
   });
-  business;
 
   return (
     <ListingForm

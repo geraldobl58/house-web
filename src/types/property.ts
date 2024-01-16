@@ -11,6 +11,7 @@ export interface Property {
     bathrooms: number;
     bedrooms: number;
     garage: number;
+    sqft: number;
     category: any;
     images: any[];
   }[];

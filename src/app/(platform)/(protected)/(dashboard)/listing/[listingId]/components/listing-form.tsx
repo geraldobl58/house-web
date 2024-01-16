@@ -100,6 +100,7 @@ const ListingForm = ({
           bathrooms: 1,
           bedrooms: 1,
           garage: 1,
+          sqft: 0,
           grill: false,
           pool: false,
         },
@@ -392,6 +393,25 @@ const ListingForm = ({
                       max={5}
                       disabled={loading}
                       placeholder="Garagem"
+                      {...field}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="sqft"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Terreno</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      disabled={loading}
+                      placeholder="Terreno"
                       {...field}
                       className="w-full"
                     />

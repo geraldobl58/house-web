@@ -36,6 +36,7 @@ const DashboardPage = async () => {
     bathroom: item.bathrooms,
     bedroom: item.bedrooms,
     garage: item.garage,
+    sqft: item.sqft,
     category: item.category.name,
     userName: item.userName,
   }));

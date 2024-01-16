@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Bath, Bed, CarFront } from "lucide-react";
+import { Bath, Bed, CarFront, Scan } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 

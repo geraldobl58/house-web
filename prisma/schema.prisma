@@ -57,6 +57,7 @@ model Property {
   bedrooms  Int
   bathrooms Int
   garage    Int
+  sqft      Int
 
   grill Boolean @default(false)
   pool  Boolean @default(false)
