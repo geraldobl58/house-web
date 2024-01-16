@@ -10,18 +10,18 @@ export async function POST(req: Request) {
     const user = await currentUser();
     const {
       categoryId,
+      businessId,
       images,
       name,
       address,
       neighborhood,
       price,
       description,
-      bathroomId,
-      bedroomId,
-      garageId,
+      bathrooms,
+      bedrooms,
+      garage,
       grill,
       pool,
-      businessId,
     } = body;
 
     if (!user || !user.id || !user.firstName) {
@@ -30,6 +30,9 @@ export async function POST(req: Request) {
 
     if (!categoryId) {
       return new NextResponse("CategoryId is required", { status: 400 });
+    }
+    if (!businessId) {
+      return new NextResponse("BusinessId is required", { status: 400 });
     }
     if (!images || !images.length) {
       return new NextResponse("Images is required", { status: 400 });
@@ -49,19 +52,15 @@ export async function POST(req: Request) {
     if (!description) {
       return new NextResponse("Description is required", { status: 400 });
     }
-    if (!bathroomId) {
-      return new NextResponse("BathroomId is required", { status: 400 });
+    if (!bathrooms) {
+      return new NextResponse("Bathrooms is required", { status: 400 });
     }
-    if (!bedroomId) {
-      return new NextResponse("BedroomId is required", { status: 400 });
+    if (!bedrooms) {
+      return new NextResponse("Bedrooms is required", { status: 400 });
     }
-    if (!garageId) {
-      return new NextResponse("GarageId is required", { status: 400 });
+    if (!garage) {
+      return new NextResponse("Garage is required", { status: 400 });
     }
-    if (!businessId) {
-      return new NextResponse("BusinessId is required", { status: 400 });
-    }
-
     // TODO: Check for subscription
 
     const listing = await prismadb.property.create({
@@ -69,6 +68,7 @@ export async function POST(req: Request) {
         userId: user.id,
         userName: user.firstName,
         categoryId,
+        businessId,
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],
@@ -79,12 +79,11 @@ export async function POST(req: Request) {
         neighborhood,
         price,
         description,
-        bathroomId,
-        bedroomId,
-        garageId,
+        bathrooms,
+        bedrooms,
+        garage,
         grill,
         pool,
-        businessId,
       },
     });
     return NextResponse.json(listing);

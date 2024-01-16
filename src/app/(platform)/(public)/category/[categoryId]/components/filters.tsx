@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 
 import { Bathroom } from "@/types/bathroom";
 import { Bedroom } from "@/types/bedroom";
-import { Garage } from "@/types/garage";
 import { Business } from "@/types/business";
 
 import { cn } from "@/lib/utils";
@@ -17,16 +16,21 @@ interface FilterProps {
   business?: Business[];
   bathroom?: Bathroom[];
   bedroom?: Bedroom[];
-  garage?: Garage[];
   name: string;
   valueKey: string;
 }
+
+const garage = [
+  {
+    id: "1",
+    quantity: 1,
+  },
+];
 
 const Filters = ({
   business,
   bathroom,
   bedroom,
-  garage,
   name,
   valueKey,
 }: FilterProps) => {

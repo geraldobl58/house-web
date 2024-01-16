@@ -39,8 +39,8 @@ export const Properties = ({ data }: Property) => {
             neighborhood={item.neighborhood}
             description={item.description}
             garage={item.garage}
-            bathroom={item.bathroom}
-            bedroom={item.bedroom}
+            bathroom={item.bathrooms}
+            bedroom={item.bedrooms}
             price={item.price}
           />
         </Card>

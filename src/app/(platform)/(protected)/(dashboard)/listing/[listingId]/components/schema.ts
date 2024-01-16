@@ -11,9 +11,9 @@ export const formShema = z.object({
   neighborhood: z.string().min(10),
   price: z.coerce.number(),
   description: z.string().min(10).max(300),
-  bathroomId: z.string().min(1),
-  bedroomId: z.string().min(1),
-  garageId: z.string().min(1),
+  bathrooms: z.coerce.number().min(1),
+  bedrooms: z.coerce.number().min(1),
+  garage: z.coerce.number().min(1),
   grill: z.boolean().default(false).optional(),
   pool: z.boolean().default(false).optional(),
 });

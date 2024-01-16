@@ -48,19 +48,19 @@ export const PropertiesCard = ({
         <div className="flex items-center">
           <CarFront className="text-muted-foreground" />
           <span className="ml-2 text-xs text-muted-foreground">
-            {garage} Garagem
+            {garage} Garagen(s)
           </span>
         </div>
         <div className="flex items-center">
           <Bath className="text-muted-foreground" />{" "}
           <span className="ml-2 text-xs text-muted-foreground">
-            {bathroom} Banheiro
+            {bathroom} Banheiro(s)
           </span>
         </div>
         <div className="flex items-center">
           <Bed className="text-muted-foreground" />{" "}
           <span className="ml-2 text-xs text-muted-foreground">
-            {bedroom} Quartos
+            {bedroom} Quarto(s)
           </span>
         </div>
       </div>
