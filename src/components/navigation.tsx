@@ -27,13 +27,8 @@ export const Navigation = () => {
       pro: false,
     },
     {
-      href: "/category/buy-house",
-      label: "Comprar",
-      pro: false,
-    },
-    {
-      href: "/category/rent-house",
-      label: "Alugar",
+      href: "/category/buy-rent",
+      label: "Imóveis",
       pro: false,
     },
     {

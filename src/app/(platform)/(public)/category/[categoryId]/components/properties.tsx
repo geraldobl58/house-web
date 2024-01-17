@@ -37,6 +37,7 @@ export const Properties = ({ data }: Property) => {
             name={item.name}
             address={item.address}
             neighborhood={item.neighborhood}
+            business={item.business}
             description={item.description}
             garage={item.garage}
             bathroom={item.bathrooms}

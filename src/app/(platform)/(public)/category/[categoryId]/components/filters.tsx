@@ -4,36 +4,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import qs from "query-string";
 
-import { Button } from "@/components/ui/button";
+import { Business } from "@prisma/client";
 
-import { Bathroom } from "@/types/bathroom";
-import { Bedroom } from "@/types/bedroom";
-import { Business } from "@/types/business";
+import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 
 interface FilterProps {
-  business?: Business[];
-  bathroom?: Bathroom[];
-  bedroom?: Bedroom[];
   name: string;
   valueKey: string;
+  data?: Business[];
 }
 
-const garage = [
-  {
-    id: "1",
-    quantity: 1,
-  },
-];
-
-const Filters = ({
-  business,
-  bathroom,
-  bedroom,
-  name,
-  valueKey,
-}: FilterProps) => {
+const Filters = ({ name, valueKey, data }: FilterProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -69,7 +52,7 @@ const Filters = ({
       <h3 className="text-lg mt-4">{name}</h3>
       <hr className="my-4" />
       <div className="flex flex-wrap gap-2">
-        {business?.map((item) => (
+        {data?.map((item) => (
           <div key={item.id} className="flex items-center">
             <Button
               className={cn(
@@ -88,78 +71,6 @@ const Filters = ({
               onClick={() => onClick(item.id)}
             >
               {item.name}
-            </Button>
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {bathroom?.map((item) => (
-          <div key={item.id} className="flex items-center">
-            <Button
-              className={cn(
-                `
-                rounded-md
-                text-sm
-                text-gray-800
-                w-8
-                bg-white
-                border
-                border-gray-300
-                hover:text-white
-              `,
-                selectedValue === item.id && "bg-primary text-white"
-              )}
-              onClick={() => onClick(item.id)}
-            >
-              {item.quantity}
-            </Button>
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {bedroom?.map((item) => (
-          <div key={item.id} className="flex items-center">
-            <Button
-              className={cn(
-                `
-                rounded-md
-                text-sm
-                text-gray-800
-                w-8
-                bg-white
-                border
-                border-gray-300
-                hover:text-white
-              `,
-                selectedValue === item.id && "bg-primary text-white"
-              )}
-              onClick={() => onClick(item.id)}
-            >
-              {item.quantity}
-            </Button>
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {garage?.map((item) => (
-          <div key={item.id} className="flex items-center">
-            <Button
-              className={cn(
-                `
-                rounded-md
-                text-sm
-                text-gray-800
-                w-8
-                bg-white
-                border
-                border-gray-300
-                hover:text-white
-              `,
-                selectedValue === item.id && "bg-primary text-white"
-              )}
-              onClick={() => onClick(item.id)}
-            >
-              {item.quantity}
             </Button>
           </div>
         ))}
