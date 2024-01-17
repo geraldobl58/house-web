@@ -34,7 +34,7 @@ export const PropertyClient = ({ property }: PropertyClientProps) => {
       </div>
       <div className="flex-1">
         <div className="bg-gray-100 p-4 rounded-lg mb-4">
-          <PropertyContact />
+          <PropertyContact property={property} />
         </div>
       </div>
     </div>
