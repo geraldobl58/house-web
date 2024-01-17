@@ -6,16 +6,13 @@ import Properties from "./components/properties";
 import prismadb from "@/lib/prismadb";
 
 interface CategoryPageProps {
-  params: {
-    categoryId: string;
-  };
   searchParams: {
     categoryId: string;
     name: string;
   };
 }
 
-const CategoryPage = async ({ searchParams, params }: CategoryPageProps) => {
+const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
   const data = await prismadb.property.findMany({
     where: {
       categoryId: searchParams.categoryId,
@@ -46,6 +43,7 @@ const CategoryPage = async ({ searchParams, params }: CategoryPageProps) => {
     bathrooms: item.bedrooms,
     bedrooms: item.bedrooms,
     garage: item.garage,
+    sqft: item.sqft,
     category: item.category,
     images: item.images.map((image) => image.url),
   }));

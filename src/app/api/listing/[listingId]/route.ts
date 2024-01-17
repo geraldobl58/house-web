@@ -23,6 +23,7 @@ export async function PATCH(
       bathrooms,
       bedrooms,
       garage,
+      sqft,
       grill,
       pool,
     } = body;
@@ -92,6 +93,7 @@ export async function PATCH(
         bathrooms,
         bedrooms,
         garage,
+        sqft,
         grill,
         pool,
       },

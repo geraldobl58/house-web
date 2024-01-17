@@ -20,6 +20,7 @@ export async function POST(req: Request) {
       bathrooms,
       bedrooms,
       garage,
+      sqft,
       grill,
       pool,
     } = body;
@@ -82,6 +83,7 @@ export async function POST(req: Request) {
         bathrooms,
         bedrooms,
         garage,
+        sqft,
         grill,
         pool,
       },

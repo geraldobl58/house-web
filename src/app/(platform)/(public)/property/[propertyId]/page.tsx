@@ -1,5 +1,8 @@
+import { redirect } from "next/navigation";
+
 import prismadb from "@/lib/prismadb";
-import { PropertiesClient } from "./components/client";
+
+import { PropertyClient } from "./components/property-client";
 
 interface PropertiesPageProps {
   params: {
@@ -8,18 +11,22 @@ interface PropertiesPageProps {
 }
 
 const PropertiesIdPage = async ({ params }: PropertiesPageProps) => {
-  const properties = await prismadb.property.findUnique({
+  const property = await prismadb.property.findUnique({
     where: {
       id: params.propertyId,
     },
+    include: {
+      category: true,
+      business: true,
+      images: true,
+    },
   });
 
-  return (
-    <>
-      <div>PropertiesPage - {params.propertyId}</div>
-      {/* <PropertiesClient properties={properties} /> */}
-    </>
-  );
+  if (!property) {
+    return redirect("/");
+  }
+
+  return <PropertyClient property={property} />;
 };
 
 export default PropertiesIdPage;
