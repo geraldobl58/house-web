@@ -16,6 +16,7 @@ interface PropertiesCardProps {
   bathroom: number;
   bedroom: number;
   price: number;
+  business: string;
 }
 
 export const PropertiesCard = ({
@@ -28,18 +29,22 @@ export const PropertiesCard = ({
   bathroom,
   bedroom,
   price,
+  business,
 }: PropertiesCardProps) => {
   return (
     <div className="ml-10 p-4 w-[450px] space-y-4">
-      <h3 className="font-medium text-2xl text-primary">
-        <Link
-          href={`/property/${id}`}
-          target="_blank"
-          className="hover:underline"
-        >
-          {name}
-        </Link>
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="font-medium text-2xl text-primary">
+          <Link
+            href={`/property/${id}`}
+            target="_blank"
+            className="hover:underline"
+          >
+            {name}
+          </Link>
+        </h3>
+        <p className="text-sm text-primary">{business}</p>
+      </div>
       <p className="text-sm">{address}</p>
       <p className="text-sm text-muted-foreground">{neighborhood}</p>
       <p className="text-sm text-gray-700">{description}</p>

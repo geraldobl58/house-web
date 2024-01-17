@@ -1,24 +1,33 @@
-import Categories from "@/components/categories";
-
-import SearchInput from "./components/search-input";
-import Properties from "./components/properties";
+import Link from "next/link";
 
 import prismadb from "@/lib/prismadb";
 
+import Categories from "@/components/categories";
+import { Button } from "@/components/ui/button";
+
+import SearchInput from "./components/search-input";
+import Properties from "./components/properties";
+import Filters from "./components/filters";
+
 interface CategoryPageProps {
+  params: {
+    categoryId: string;
+  };
   searchParams: {
     categoryId: string;
     name: string;
+    businessId: string;
   };
 }
 
-const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
+const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const data = await prismadb.property.findMany({
     where: {
       categoryId: searchParams.categoryId,
       name: {
         search: searchParams.name,
       },
+      businessId: searchParams.businessId,
     },
     orderBy: {
       createdAt: "desc",
@@ -26,10 +35,13 @@ const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
     include: {
       images: true,
       category: true,
+      business: true,
     },
   });
 
   const categories = await prismadb.category.findMany();
+
+  const business = await prismadb.business.findMany();
 
   const formattedProperties = data.map((item) => ({
     id: item.id,
@@ -38,6 +50,7 @@ const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
     name: item.name,
     address: item.address,
     neighborhood: item.neighborhood,
+    business: item.business.name,
     price: item.price,
     description: item.description,
     bathrooms: item.bedrooms,
@@ -54,6 +67,14 @@ const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
         <h3 className="text-lg">Busque seu imóvel</h3>
         <div className="relative mt-4">
           <SearchInput />
+        </div>
+        <div>
+          <Filters valueKey="businessId" data={business} name="Tipo" />
+        </div>
+        <div className="hidden lg:block">
+          <Link href={`/category/${params.categoryId}`}>
+            <Button className="w-full">Limpar Filtros</Button>
+          </Link>
         </div>
       </div>
       <div className="flex-1 bg-zinc-100 h-full p-6 rounded-lg">
